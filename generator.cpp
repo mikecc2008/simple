@@ -10,7 +10,6 @@ using namespace std;
 class Generator {
 	vector<string> procedures;
 	vector<string> variables;
-	vector<string> operators;
 	int procNum, programSize, openBracket, nestedLevel;
 	public:
 		Generator(int pn, int ps, int nl) {
@@ -18,8 +17,6 @@ class Generator {
 			programSize = ps;
 			nestedLevel = nl;
 			openBracket = 0;
-
-			operators.push_back("+");
 
 			srand ( time(NULL) );
 		}
@@ -64,7 +61,8 @@ class Generator {
 		}
 
 		string getOperator() {
-			return operators[getInt(operators.size(), 0)];
+			static const string operators[] = {"+", "-", "*", "/"};
+			return operators[getInt(4, 0)];
 		}
 
 		string getIndent() {
@@ -129,13 +127,14 @@ class Generator {
 int main()
 {
 	int procNum, nestedLevel, programSize;
-	
+
 	cout	<< "Numbers of statements: ";
 	cin		>> programSize;
 	cout	<< "Numbers of procedure: ";
 	cin 	>> procNum;
 	cout	<< "Numbers of nested level: ";
 	cin 	>> nestedLevel;
+	
 
 	Generator g (procNum, programSize, nestedLevel);
 	g.generate();
