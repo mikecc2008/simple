@@ -28,7 +28,7 @@ class Generator {
 			while(programSize) {
 				int stmtType = getInt(3, 0);
 				
-				if(variables.size() == 0 || openBracket > nestedLevel)
+				if(variables.size() == 0 || openBracket > nestedLevel || programSize == 1)
 					cout << getAssign() << endl;
 				else {
 					if(stmtType == 0)
