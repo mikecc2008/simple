@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <algorithm>
 using namespace std;
 
 class Generator {
@@ -92,18 +93,15 @@ class Generator {
 			string assign = getIndent() + varName + " = ";
 			stringstream ss;
 			ss << getInt();
-			if(variables.size() == 0) {
-				variables.push_back(varName);
+			if(variables.size() == 0 || getInt() > 50) {
+				if(find(variables.begin(), variables.end(), varName) == variables.end())
+					variables.push_back(varName);
 				assign += ss.str() + ";"; 
 			}
-			else if(getInt() > 50) {
+			else {
 				assign += getVar() + " "; 
 				assign += getOperator() + " ";
 				assign += ss.str() + ";";
-			}
-			else {
-				variables.push_back(varName);
-				assign += ss.str() + ";";	
 			}
 
 			if(openBracket > 1 && getInt() > 50) {
