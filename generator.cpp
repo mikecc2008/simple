@@ -27,7 +27,7 @@ class Generator {
 			while(programSize) {
 				int stmtType = getInt(3, 0);
 				
-				if(variables.size() == 0)
+				if(variables.size() == 0 || openBracket > nestedLevel)
 					cout << getAssign() << endl;
 				else {
 					if(stmtType == 0)
@@ -43,19 +43,17 @@ class Generator {
 				cout << getIndent() << "}" << endl;
 		}
 	private:
-		int getInt(int max = 1000, int min = 1) {
+		int getInt(int max = 100, int min = 1) {
 			return rand() % max + min;
 		}	
 
 		string getName(int len = 5) {
 			static const char alphanum[] =
-		        "0123456789"
-		        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-		        "abcdefghijklmnopqrstuvwxyz";
-			string name(1, alphanum[getInt(sizeof(alphanum), 10)]);
+		        "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+			string name(1, alphanum[getInt(sizeof(alphanum) - 10, 10)]);
 
 			for(int i = 1; i < len; i++)
-				name += alphanum[getInt(sizeof(alphanum), 0)];
+				name += alphanum[getInt(sizeof(alphanum) - 10, 0)];
 
 			return name;
 		}
